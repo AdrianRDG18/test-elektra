@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { SweetAlertService } from '../../services/swal-service';
 import Swal from 'sweetalert2';
+import { CryptoService } from '../../utils/crypto';
 
 @Component({
   selector: 'app-login-page',
@@ -15,6 +16,7 @@ export class LoginPage {
   authService = inject(AuthService);
   formBuilder = inject(FormBuilder);
   swal = inject(SweetAlertService);
+  cryptoService = inject(CryptoService);
 
   loginForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -33,7 +35,19 @@ export class LoginPage {
       this.authService.login(email!, password!, (success, msg) => {
 
         if (success) {
-          this.swal.swalSuccess('Success', msg);
+          this.swal.swalConfirm('Confirm your access', msg).then(result => {
+
+            if(result.isConfirmed) {
+
+              const loggedUser = JSON.parse(localStorage.getItem('loggedUser')!);
+              const { email, password } = loggedUser;
+
+              console.log(this.cryptoService.decrypt(email));
+              console.log(this.cryptoService.decrypt(password));
+
+              localStorage.removeItem('loggedUser');
+            }
+          })
         } else {
           this.swal.swalError('Error', msg);
         }
