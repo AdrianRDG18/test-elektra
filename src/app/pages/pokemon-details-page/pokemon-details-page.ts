@@ -1,5 +1,5 @@
 import { catchError, map, Observable, of, switchMap } from 'rxjs';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { PokemonService } from '../../services/pokemon-service';
 import { PokemonResponseInterface } from '../../interfaces/pokemon-response-interface';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +16,7 @@ export class PokemonDetailsPage implements OnInit {
   route = inject(ActivatedRoute);
   pokemonService = inject(PokemonService);
   pokemon$!: Observable<PokemonResponseInterface | null>;
+  cardColor = signal<string>('#ffffff');
 
   ngOnInit(): void {
 
@@ -31,6 +32,13 @@ export class PokemonDetailsPage implements OnInit {
         );
       })
     );
+  }
+
+  changeColor(){
+    const colorRnd = '#xxxxxx'.replace(/x/g, (y) =>
+      ((Math.random() * 16) | 0).toString(16)
+    );
+    this.cardColor.set(colorRnd);
   }
 
 }

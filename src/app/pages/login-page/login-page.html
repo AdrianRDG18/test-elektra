@@ -11,12 +11,12 @@
       <div class="card-body">
         <form class="fieldset" [formGroup]="loginForm" (submit)="login()">
           <label class="label">Email</label>
-          <input type="email" class="input" placeholder="Email" formControlName="email"/>
+          <input type="email" class="input" placeholder="Email" formControlName="email" (keypress)="keyPress()"/>
           <small class="text-secondary">{{ getControlErrors('email') }}</small>
           <label class="label">Password</label>
           <input type="password" class="input" placeholder="Password" formControlName="password"/>
           <small class="text-secondary">{{ getControlErrors('password') }}</small>
-          <button class="btn btn-neutral mt-4">Login</button>
+          <button #btnLogin class="btn btn-neutral mt-4">Login</button>
         </form>
       </div>
     </div>

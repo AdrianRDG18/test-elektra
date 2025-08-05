@@ -2,7 +2,8 @@
 
   @if (pokemon$ | async; as pokemon) {
 
-    <div class="bg-white shadow-xl rounded-2xl max-w-md w-full p-6 text-center space-y-4">
+    <div class="shadow-xl rounded-2xl max-w-md w-full p-6 text-center space-y-4"
+         [style]="{'background-color': cardColor()}" (click)="changeColor()">
       <h2 class="text-3xl font-bold text-indigo-700">{{ pokemon.name | titlecase }}</h2>
 
       <img [src]="pokemon.sprites.other?.dream_world?.front_default" [alt]="pokemon.name" class="w-40 h-40 mx-auto drop-shadow-lg"/>

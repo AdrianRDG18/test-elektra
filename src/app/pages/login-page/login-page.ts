@@ -1,5 +1,5 @@
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { SweetAlertService } from '../../services/swal-service';
 import Swal from 'sweetalert2';
@@ -12,6 +12,8 @@ import { CryptoService } from '../../utils/crypto';
   styles: ``
 })
 export class LoginPage {
+
+  @ViewChild('btnLogin') btnLogin: ElementRef | undefined;
 
   authService = inject(AuthService);
   formBuilder = inject(FormBuilder);
@@ -73,5 +75,12 @@ export class LoginPage {
     return null;
   }
 
-
+  keyPress() {
+    const colorRnd = '#xxxxxx'.replace(/x/g, (y) =>
+      ((Math.random() * 16) | 0).toString(16)
+    );
+    if (this.btnLogin) {
+      this.btnLogin.nativeElement.style.backgroundColor = colorRnd;
+    }
+  }
 }
