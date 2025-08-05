@@ -10,7 +10,7 @@
         @for (region of regions(); track $index) {
           <li><a [routerLink]="['/regions', region.name]" routerLinkActive="text-secondary">{{region.name| titlecase}}</a></li>
         }
-        <li><a [routerLink]="['/login']">Login</a></li>
+        <li><a [routerLink]="['/login']" routerLinkActive="text-secondary">Login</a></li>
       </ul>
     </div>
     <a class="btn btn-ghost text-xl">daisyUI</a>
@@ -20,7 +20,7 @@
       @for (region of regions(); track $index) {
         <li><a [routerLink]="['/regions', region.name]" routerLinkActive="text-secondary">{{region.name| titlecase}}</a></li>
       }
-      <li class="text-accent"><a [routerLink]="['/login']">Login</a></li>
+      <li><a [routerLink]="['/login']" routerLinkActive="text-secondary">Login</a></li>
     </ul>
   </div>
 </div>
