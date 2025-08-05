@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { PokedexResponseInterface } from '../interfaces/pokedex-response-interface';
+import { PokemonResponseInterface } from '../interfaces/pokemon-response-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class PokemonService {
 
   getPokesByRegion(region: string): Observable<PokedexResponseInterface>{
     return this.httpClient.get<PokedexResponseInterface>(`${this.POKE_API_BASE_URL}/pokedex/${region}`);
+  }
+
+  getPokemonDetails(pokemon_name: string): Observable<PokemonResponseInterface>{
+    return this.httpClient.get<PokemonResponseInterface>(`${this.POKE_API_BASE_URL}/pokemon/${pokemon_name}`);
   }
 
 }

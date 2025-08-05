@@ -1,1 +1,58 @@
-<p>pokemon-details-page works!</p>
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 p-4">
+
+  @if (pokemon$ | async; as pokemon) {
+
+    <div class="bg-white shadow-xl rounded-2xl max-w-md w-full p-6 text-center space-y-4">
+      <h2 class="text-3xl font-bold text-indigo-700">{{ pokemon.name | titlecase }}</h2>
+
+      <img [src]="pokemon.sprites.other?.dream_world?.front_default" [alt]="pokemon.name" class="w-40 h-40 mx-auto drop-shadow-lg"/>
+
+      <div class="grid grid-cols-2 gap-4 text-gray-700 text-sm">
+
+        <div>
+          <p class="font-semibold text-gray-500">Height</p>
+          <p>{{ pokemon.height / 10 }} m</p>
+        </div>
+
+        <div>
+          <p class="font-semibold text-gray-500">Weight</p>
+          <p>{{ pokemon.weight / 10 }} kg</p>
+        </div>
+
+        <div class="col-span-2">
+          <p class="font-semibold text-gray-500">Types</p>
+
+          <div class="flex justify-center gap-2 mt-1">
+            @for (type of pokemon.types; track type.type.name) {
+              <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">
+                {{ type.type.name | uppercase}}
+              </span>
+            }
+          </div>
+
+        </div>
+
+        <div class="col-span-2">
+          <p class="font-semibold text-gray-500">Abilities</p>
+
+          <div class="flex flex-wrap justify-center gap-2 mt-1">
+            @for (ability of pokemon.abilities; track ability.ability?.name) {
+              <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                {{ ability.ability?.name | uppercase}}
+              </span>
+            }
+          </div>
+
+        </div>
+
+      </div>
+
+      <p class="text-gray-600 text-sm">
+        <strong>Moves:</strong> {{ pokemon.moves.length }} total
+      </p>
+
+    </div>
+  } @else {
+    <p class="text-gray-600 animate-pulse">Loading Pokémon details...</p>
+  }
+</div>
