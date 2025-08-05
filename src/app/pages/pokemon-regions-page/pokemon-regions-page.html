@@ -1,1 +1,37 @@
-<p>pokemon-regions-page works!</p>
+
+
+<div class="overflow-x-auto">
+
+  <h6>Pokemons from: <span class="text-secondary">{{region() | uppercase}}</span></h6>
+
+  @if (pokemonsCall$ | async; as pokemons) {
+    @if (pokemons) {
+      <table class="table table-zebra mt-4">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pokemon name</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pokemon of pokemons; track $index) {
+            <tr>
+              <th>{{$index + 1}}</th>
+              <td>{{pokemon.pokemon_species.name | titlecase}}</td>
+              <td><button [routerLink]="['/pokemon-details', pokemon.pokemon_species.name]" class="btn btn-sm btn-primary">Show more</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="alert alert-warning">
+        <p>There is no data</p>
+      </div>
+    }
+  } @else {
+    <div class="alert alert-error mt-4">
+      <p>{{errorMsg()}}</p>
+    </div>
+  }
+</div>
