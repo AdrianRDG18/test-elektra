@@ -1,15 +1,23 @@
 import { catchError, map, Observable, of, switchMap } from 'rxjs';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { PokemonService } from '../../services/pokemon-service';
 import { PokemonResponseInterface } from '../../interfaces/pokemon-response-interface';
 import { ActivatedRoute } from '@angular/router';
-import { AsyncPipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
+import { AsyncPipe, NgClass, TitleCasePipe, UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon-details-page',
-  imports: [AsyncPipe, TitleCasePipe, UpperCasePipe],
+  imports: [AsyncPipe, TitleCasePipe, UpperCasePipe, NgClass],
   templateUrl: './pokemon-details-page.html',
-  styles: ``
+  styles: `
+    .card-animation {
+      transition: background-color 0.4s ease-in-out, transform 0.2s ease-in-out;
+      transform: scale(1.2);
+    }
+    .card-normal {
+      transform: scale(1);
+    }
+  `
 })
 export class PokemonDetailsPage implements OnInit {
 
@@ -17,6 +25,7 @@ export class PokemonDetailsPage implements OnInit {
   pokemonService = inject(PokemonService);
   pokemon$!: Observable<PokemonResponseInterface | null>;
   cardColor = signal<string>('#ffffff');
+  isAnimated = signal(false);
 
   ngOnInit(): void {
 
@@ -40,5 +49,15 @@ export class PokemonDetailsPage implements OnInit {
     );
     this.cardColor.set(colorRnd);
   }
+
+  changeColorEffect = effect(() => {
+    this.isAnimated.set(true);
+
+    setTimeout(() => {
+      this.isAnimated.set(false);
+    }, 200);
+
+    console.log('Card color changed:', this.cardColor());
+  });
 
 }
